@@ -1,24 +1,16 @@
-from RSA_keys import Key
-
 class Crypt:
-    def __init__(self):
-        self.keys = Key(8)
-        self.openKey, self.closeKey = self.keys.getKeys()
-
-    def encrypt(self, text):
+    def encrypt(self, text, key):
         codeArray = []
         for i in range(len(text)):
-            codeArray.append((ord(text[i])**self.openKey[0])%self.openKey[1])
-
-        return codeArray
-
-    def decode(self, encryptedArray):
-        codeArray = []
-        for i in range(len(encryptedArray)):
-            codeArray.append(chr((encryptedArray[i]**self.closeKey[0])%self.closeKey[1]))
-        s = ""
+            codeArray.append(str((ord(text[i])**key[0])%key[1]))
+        s = "."
         return s.join(codeArray)
 
-c = Crypt()
-
-print(c.decode(c.encrypt("Vlad")))
+    def decrypt(self, encryptedString, key):
+        print("text =", encryptedString, "key=", key)
+        encryptedArray = encryptedString.split(".")
+        codeArray = []
+        for i in range(len(encryptedArray)):
+            codeArray.append(chr((int(encryptedArray[i])**key[0])%key[1]))
+        s = ""
+        return s.join(codeArray)

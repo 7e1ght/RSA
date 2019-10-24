@@ -43,23 +43,31 @@ class Key:
 
         raise Exception("Не удалось найти относительно простое число.")
 
-    def getD(self, e, eler):
-        k = 1
-        while True:
-            if k*e%eler == 1:
-                return k
-            else: k = k + 1
+    def getD(self, a, b):
+        if b == 0:
+            return a, 1, 0
+        else:
+            d, x1, y1 = self.getD(b, a%b)
+            x = y1
+            y = x1-(a//b)*y1
+            return d, x, y
 
 
     def getKeys(self):
         p = self.__getPrime()
+        # p =  3557
+
         q = self.__getPrime() 
+        # q = 2579
 
         n = p * q
         eler = (p-1) * (q-1)
 
         e = self.__getRealativePrime(eler)
-        d = self.getD(e, eler)
+        d = self.getD(e, eler)[1]
+
+        if d < 0:
+            d = d+abs(d)*e+1
 
         #open key, close key
         return [[e, n], [d, n]]
