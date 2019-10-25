@@ -52,22 +52,37 @@ class Key:
             y = x1-(a//b)*y1
             return d, x, y
 
+    def __test(self, keys): 
+        test = 2
+
+        encrypt = test**keys[0][0]%keys[0][1]
+        decrypt = encrypt**keys[1][0]%keys[1][1]
+
+        return test == decrypt
 
     def getKeys(self):
-        p = self.__getPrime()
-        # p =  3557
+        testFlag = False
+        while not testFlag:
+            p = self.__getPrime()
+            # p =  3557
 
-        q = self.__getPrime() 
-        # q = 2579
+            q = self.__getPrime() 
+            # q = 2579
 
-        n = p * q
-        eler = (p-1) * (q-1)
+            n = p * q
+            eler = (p-1) * (q-1)
 
-        e = self.__getRealativePrime(eler)
-        d = self.getD(e, eler)[1]
+            e = self.__getRealativePrime(eler)
+            d = self.getD(e, eler)[1]
 
-        if d < 0:
-            d = d+abs(d)*e+1
+            if d < 0:
+                d = d+abs(d)*e+1
+
+            testFlag = self.__test([[e, n], [d, n]])
 
         #open key, close key
         return [[e, n], [d, n]]
+
+
+
+        

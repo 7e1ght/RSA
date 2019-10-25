@@ -7,7 +7,6 @@ class Crypt:
         return s.join(codeArray)
 
     def decrypt(self, encryptedString, key):
-        print("text =", encryptedString, "key=", key)
         encryptedArray = encryptedString.split(".")
         codeArray = []
         for i in range(len(encryptedArray)):
